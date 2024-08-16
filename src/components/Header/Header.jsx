@@ -4,16 +4,20 @@ import user from '../../assets/images/user.png'
 import './Header.css'
 import { useDispatch } from 'react-redux';
 import { fetchAsyncMovies, fetchAsyncShows } from '../../features/movies/MovieSlice';
+import { useNavigate } from 'react-router-dom';
 
 function Header() {
   const [searchInput, setSearchInput] = useState('');
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const submitHandler = (e) => {
     e.preventDefault();
     if (searchInput !== '') {
       dispatch(fetchAsyncMovies(searchInput));
       dispatch(fetchAsyncShows(searchInput));
       setSearchInput('');
+      navigate(`/search/query?${searchInput}`);
     }
   }
 
@@ -22,15 +26,14 @@ function Header() {
       <div className='header'>
         <div className="logo"><Link to='/'>Movie-App</Link></div>
         <div className='search-bar big-one'>
-          <form
-            onSubmit={submitHandler}>
+          <form>
             <input
               type="text"
               value={searchInput}
               placeholder='Search Movies or Shows'
               onChange={(e) => setSearchInput(e.target.value)}
             />
-            <button type='submit' className='search-btn'>🔍</button>
+            <button className='search-btn' onClick={submitHandler}>🔍</button>
           </form>
         </div>
         <div className="user-image">

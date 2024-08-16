@@ -9,16 +9,12 @@ function Home() {
   const showText = "Friends";
 
   useEffect(() => {
-      dispatch(fetchAsyncMovies(movieText));
-      dispatch(fetchAsyncShows(showText));
-      console.log("Fetched");
+    dispatch(fetchAsyncMovies(movieText));
+    dispatch(fetchAsyncShows(showText));
   }, [dispatch]);
 
   return (
-    <div>
-    <div className='banner-img'></div>
     <MovieListing />
-    </div>
   )
 }
 

@@ -5,6 +5,7 @@ import MovieDetail from './components/MovieDetail/MovieDetail.jsx'
 import PageNotFound from './components/PageNotFound/PageNotFound.jsx'
 import Header from './components/Header/Header.jsx'
 import Footer from './components/Footer/Footer.jsx'
+import SearchContent from './components/SearchedContent/SearchContent.jsx'
 
 function App() {
 
@@ -14,8 +15,9 @@ function App() {
       <div className="container">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/movie/:imdbID" element={<MovieDetail />} />
-          <Route element={<PageNotFound />} />
+          <Route path="/:imdbID" element={<MovieDetail />} />
+          <Route path="/search/query?/:keyword" element={<SearchContent />} />
+          <Route path='/*' element={<PageNotFound />} />
         </Routes>
       </div>
       <Footer />

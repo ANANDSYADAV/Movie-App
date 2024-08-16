@@ -1,11 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import movieApi from '../../Apis/MovieApi'
-import { APIKey } from '../../Apis/MovieApiKey.js'
+
+// Fetch movies and shows using movie API
+const APIKey = import.meta.env.VITE_API_KEY;
 
 export const fetchAsyncMovies = createAsyncThunk(
     "movies/fetchAsyncMovies",
     async (searchInput) => {
-        const response = await movieApi.get(`?apiKey=${APIKey}&s=${searchInput}&type=movie`)
+        const response = await movieApi.get(`?apiKey=${APIKey}&s=${searchInput}&type=movie`);
         return response.data;
     }
 )
@@ -13,7 +15,7 @@ export const fetchAsyncMovies = createAsyncThunk(
 export const fetchAsyncShows = createAsyncThunk(
     "movies/fetchAsyncShows",
     async (searchInput) => {
-        const response = await movieApi.get(`?apiKey=${APIKey}&s=${searchInput}&type=series`)
+        const response = await movieApi.get(`?apiKey=${APIKey}&s=${searchInput}&type=series`);
         return response.data;
     }
 )
@@ -21,7 +23,7 @@ export const fetchAsyncShows = createAsyncThunk(
 export const fetchAsyncMovieOrShowDetails = createAsyncThunk(
     "movies/fetchAsyncMovieOrShowDetails",
     async (id) => {
-        const response = await movieApi.get(`?apiKey=${APIKey}&i=${id}&Plot=full`)
+        const response = await movieApi.get(`?apiKey=${APIKey}&i=${id}&Plot=full`);
         return response.data;
     }
 )
@@ -52,16 +54,16 @@ const movieSlice = createSlice({
             state.movies = action.payload;
         }),
 
-        // For Shows
-        builder.addCase(fetchAsyncShows.fulfilled, (state, action) => {
-            state.shows = action.payload;
-        }),
+            // For Shows
+            builder.addCase(fetchAsyncShows.fulfilled, (state, action) => {
+                state.shows = action.payload;
+            }),
 
-        // MovieOrShowDetails
-        builder.addCase(fetchAsyncMovieOrShowDetails.fulfilled, (state, action) => {
-            console.log("Movie Details fetched");
-            state.selectMovieOrShow = action.payload;
-        })
+            // MovieOrShowDetails
+            builder.addCase(fetchAsyncMovieOrShowDetails.fulfilled, (state, action) => {
+                console.log("Movie Details fetched");
+                state.selectMovieOrShow = action.payload;
+            })
     }
 });
 
